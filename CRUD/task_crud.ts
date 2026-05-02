@@ -36,3 +36,19 @@ class TaskService {
 	return task;
  }
 
+ update(
+	id:string,
+	updates:Partial<Pick<Task, "title" | "description">>
+): Task {
+  const task = this.getById(id);
+  if(updates.title !== undefinde) {
+	this.validateTitle(updates.title);
+	task.title=updates. title.trim();
+  }
+  
+  task.updatedAt =new Date();
+
+  return task;
+}
+
+

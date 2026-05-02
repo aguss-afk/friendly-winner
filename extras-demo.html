@@ -51,61 +51,36 @@
   </div>
 
   <script type="module">
-    import { filterTasks, initFilters, getCurrentFilter } from './services/filters.js';
-    import { searchTasks, initSearch, getCurrentQuery } from './services/search.js';
-    import { initTheme } from './services/theme.js';
-    // Datos de prueba (mock) - simulan tareas reales
-    const mockTasks = [
-        { id: 1, text: 'Estudiar para examen de SO', completed: false },
-        { id: 2, text: 'Hacer push del README', completed: true },
-        { id: 3, text: 'Configurar VSCode', completed: true },
-        { id: 4, text: 'Reunión con el equipo', completed: false },
-        { id: 5, text: 'Repasar Git Flow', completed: false }
-    ];
+  import { initFilters } from './services/filters.js';
+  import { initSearch } from './services/search.js';
+  import { initTheme } from './services/theme.js';
+  import { renderFilteredTasks } from './services/taskRenderer.js';
 
-    const taskList = document.getElementById('task-list');
+  // Datos de prueba (mock) - simulan tareas reales
+  const mockTasks = [
+    { id: 1, text: 'Estudiar para examen de SO', completed: false },
+    { id: 2, text: 'Hacer push del README', completed: true },
+    { id: 3, text: 'Configurar VSCode', completed: true },
+    { id: 4, text: 'Reunión con el equipo', completed: false },
+    { id: 5, text: 'Repasar Git Flow', completed: false }
+  ];
 
-    /**
-     * Renderiza las tareas en el DOM
-     */
-    function renderTasks(tasks) {
-        taskList.innerHTML = '';
-        if (tasks.length === 0) {
-        taskList.innerHTML = '<li class="empty">No hay tareas que mostrar</li>';
-        return;
-        }
-        tasks.forEach(task => {
-        const li = document.createElement('li');
-        li.className = `task ${task.completed ? 'completed' : ''}`;
-        li.innerHTML = `
-            <span class="task-status">${task.completed ? '✓' : '○'}</span>
-            <span class="task-text">${task.text}</span>
-        `;
-        taskList.appendChild(li);
-        });
-    }
+  const taskList = document.getElementById('task-list');
 
-    /**
-     * Aplica búsqueda y luego filtro, y re-renderiza
-     * (la combinación final se mejora en el commit 9)
-     */
-    function applyAndRender() {
-        const filtered = filterTasks(mockTasks, getCurrentFilter());
-        const searched = searchTasks(filtered, getCurrentQuery());
-        renderTasks(searched);
-    }
+  /**
+   * Función central que aplica todo y renderiza
+   */
+  function update() {
+    renderFilteredTasks(mockTasks, taskList);
+  }
 
-    // Render inicial
-    renderTasks(mockTasks);
+  // Render inicial
+  update();
 
-    // Inicializar filtros
-    initFilters(() => applyAndRender());
-
-    // Inicializar búsqueda
-    initSearch(() => applyAndRender());
-
-    // Inicializar tema (carga preferencia guardada y conecta botón)
-    initTheme();
-    </script>
+  // Conectar todos los listeners a la función central
+  initFilters(update);
+  initSearch(update);
+  initTheme();
+</script>
 </body>
 </html>

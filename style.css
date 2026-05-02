@@ -5,7 +5,7 @@ body {
 }
 
 .app {
-  width: 300px;
+  width: 320px;
   margin: 60px auto;
   background: white;
   padding: 20px;
@@ -46,6 +46,13 @@ button:hover {
 .task {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 10px;
+  padding: 8px;
+  background: #fafafa;
+  border-radius: 6px;
 }
 
+.task-text {
+  flex: 1;
+}

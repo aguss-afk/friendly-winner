@@ -27,7 +27,7 @@
         <button id="search-clear" class="search-clear" aria-label="Limpiar búsqueda" hidden>✕</button>
     </div>
     </section>
-    
+
     <!-- Sección de filtros -->
     <section class="filters-section">
       <h2>Filtros</h2>
@@ -46,15 +46,16 @@
   </div>
 
   <script type="module">
-    import { filterTasks, initFilters } from './services/filters.js';
+    import { filterTasks, initFilters, getCurrentFilter } from './services/filters.js';
+    import { searchTasks, initSearch, getCurrentQuery } from './services/search.js';
 
     // Datos de prueba (mock) - simulan tareas reales
     const mockTasks = [
-      { id: 1, text: 'Estudiar para examen de SO', completed: false },
-      { id: 2, text: 'Hacer push del README', completed: true },
-      { id: 3, text: 'Configurar VSCode', completed: true },
-      { id: 4, text: 'Reunión con el equipo', completed: false },
-      { id: 5, text: 'Repasar Git Flow', completed: false }
+        { id: 1, text: 'Estudiar para examen de SO', completed: false },
+        { id: 2, text: 'Hacer push del README', completed: true },
+        { id: 3, text: 'Configurar VSCode', completed: true },
+        { id: 4, text: 'Reunión con el equipo', completed: false },
+        { id: 5, text: 'Repasar Git Flow', completed: false }
     ];
 
     const taskList = document.getElementById('task-list');
@@ -63,30 +64,40 @@
      * Renderiza las tareas en el DOM
      */
     function renderTasks(tasks) {
-      taskList.innerHTML = '';
-      if (tasks.length === 0) {
+        taskList.innerHTML = '';
+        if (tasks.length === 0) {
         taskList.innerHTML = '<li class="empty">No hay tareas que mostrar</li>';
         return;
-      }
-      tasks.forEach(task => {
+        }
+        tasks.forEach(task => {
         const li = document.createElement('li');
         li.className = `task ${task.completed ? 'completed' : ''}`;
         li.innerHTML = `
-          <span class="task-status">${task.completed ? '✓' : '○'}</span>
-          <span class="task-text">${task.text}</span>
+            <span class="task-status">${task.completed ? '✓' : '○'}</span>
+            <span class="task-text">${task.text}</span>
         `;
         taskList.appendChild(li);
-      });
+        });
+    }
+
+    /**
+     * Aplica búsqueda y luego filtro, y re-renderiza
+     * (la combinación final se mejora en el commit 9)
+     */
+    function applyAndRender() {
+        const filtered = filterTasks(mockTasks, getCurrentFilter());
+        const searched = searchTasks(filtered, getCurrentQuery());
+        renderTasks(searched);
     }
 
     // Render inicial
     renderTasks(mockTasks);
 
-    // Inicializar filtros con callback
-    initFilters((filter) => {
-      const filtered = filterTasks(mockTasks, filter);
-      renderTasks(filtered);
-    });
-  </script>
+    // Inicializar filtros
+    initFilters(() => applyAndRender());
+
+    // Inicializar búsqueda
+    initSearch(() => applyAndRender());
+    </script>
 </body>
 </html>

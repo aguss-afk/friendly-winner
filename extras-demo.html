@@ -9,8 +9,13 @@
 <body>
   <div class="container">
     <header>
-      <h1>To-Do List - Extras Demo</h1>
-      <p class="subtitle">Vista previa de filtros, buscador y modo oscuro</p>
+        <div class="header-top">
+            <div>
+            <h1>To-Do List - Extras Demo</h1>
+            <p class="subtitle">Vista previa de filtros, buscador y modo oscuro</p>
+            </div>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar a modo oscuro">🌙</button>
+        </div>
     </header>
 
     <!-- Sección de búsqueda -->
@@ -48,7 +53,7 @@
   <script type="module">
     import { filterTasks, initFilters, getCurrentFilter } from './services/filters.js';
     import { searchTasks, initSearch, getCurrentQuery } from './services/search.js';
-
+    import { initTheme } from './services/theme.js';
     // Datos de prueba (mock) - simulan tareas reales
     const mockTasks = [
         { id: 1, text: 'Estudiar para examen de SO', completed: false },
@@ -98,6 +103,9 @@
 
     // Inicializar búsqueda
     initSearch(() => applyAndRender());
+
+    // Inicializar tema (carga preferencia guardada y conecta botón)
+    initTheme();
     </script>
 </body>
 </html>

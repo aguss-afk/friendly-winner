@@ -220,3 +220,51 @@ header h1 {
   background: var(--border);
   color: var(--text-color);
 }
+/* ===========================
+   Header con botón de tema
+   =========================== */
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.header-top > div {
+  text-align: left;
+}
+
+.theme-toggle {
+  background: var(--btn-inactive);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  background: var(--border);
+  transform: scale(1.05);
+}
+
+/* ===========================
+   Dark Mode - Override de variables
+   =========================== */
+body.dark-mode {
+  --bg-color: #0f172a;
+  --text-color: #f1f5f9;
+  --container-bg: #1e293b;
+  --primary: #818cf8;
+  --primary-hover: #a5b4fc;
+  --border: #334155;
+  --btn-inactive: #1e293b;
+  --btn-inactive-text: #94a3b8;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}

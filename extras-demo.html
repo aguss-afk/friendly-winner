@@ -23,9 +23,55 @@
       </div>
     </section>
 
-    <!-- Aquí más adelante se conectará con el resto del proyecto -->
+    <!-- Lista de tareas (mock data para probar) -->
+    <section class="tasks-section">
+      <h2>Tareas</h2>
+      <ul id="task-list" class="task-list"></ul>
+    </section>
   </div>
 
-  <script type="module" src="services/filters.js"></script>
+  <script type="module">
+    import { filterTasks, initFilters } from './services/filters.js';
+
+    // Datos de prueba (mock) - simulan tareas reales
+    const mockTasks = [
+      { id: 1, text: 'Estudiar para examen de SO', completed: false },
+      { id: 2, text: 'Hacer push del README', completed: true },
+      { id: 3, text: 'Configurar VSCode', completed: true },
+      { id: 4, text: 'Reunión con el equipo', completed: false },
+      { id: 5, text: 'Repasar Git Flow', completed: false }
+    ];
+
+    const taskList = document.getElementById('task-list');
+
+    /**
+     * Renderiza las tareas en el DOM
+     */
+    function renderTasks(tasks) {
+      taskList.innerHTML = '';
+      if (tasks.length === 0) {
+        taskList.innerHTML = '<li class="empty">No hay tareas que mostrar</li>';
+        return;
+      }
+      tasks.forEach(task => {
+        const li = document.createElement('li');
+        li.className = `task ${task.completed ? 'completed' : ''}`;
+        li.innerHTML = `
+          <span class="task-status">${task.completed ? '✓' : '○'}</span>
+          <span class="task-text">${task.text}</span>
+        `;
+        taskList.appendChild(li);
+      });
+    }
+
+    // Render inicial
+    renderTasks(mockTasks);
+
+    // Inicializar filtros con callback
+    initFilters((filter) => {
+      const filtered = filterTasks(mockTasks, filter);
+      renderTasks(filtered);
+    });
+  </script>
 </body>
 </html>

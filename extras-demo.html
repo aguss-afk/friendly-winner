@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo - Extras (Filtros, Búsqueda y Dark Mode)</title>
+  <link rel="stylesheet" href="extras.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+        <div class="header-top">
+            <div>
+            <h1>To-Do List - Extras Demo</h1>
+            <p class="subtitle">Vista previa de filtros, buscador y modo oscuro</p>
+            </div>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar a modo oscuro">🌙</button>
+        </div>
+    </header>
+
+    <!-- Sección de búsqueda -->
+    <section class="search-section">
+    <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input
+        type="text"
+        id="search-input"
+        class="search-input"
+        placeholder="Buscar tareas..."
+        autocomplete="off"
+        />
+        <button id="search-clear" class="search-clear" aria-label="Limpiar búsqueda" hidden>✕</button>
+    </div>
+    </section>
+
+    <!-- Sección de filtros -->
+    <section class="filters-section">
+      <h2>Filtros</h2>
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">Todas</button>
+        <button class="filter-btn" data-filter="pending">Pendientes</button>
+        <button class="filter-btn" data-filter="completed">Completadas</button>
+      </div>
+    </section>
+
+    <!-- Lista de tareas (mock data para probar) -->
+    <section class="tasks-section">
+      <h2>Tareas</h2>
+      <ul id="task-list" class="task-list"></ul>
+    </section>
+  </div>
+
+  <script type="module">
+  import { initFilters } from './services/filters.js';
+  import { initSearch } from './services/search.js';
+  import { initTheme } from './services/theme.js';
+  import { renderFilteredTasks } from './services/taskRenderer.js';
+
+  // Datos de prueba (mock) - simulan tareas reales
+  const mockTasks = [
+    { id: 1, text: 'Estudiar para examen de SO', completed: false },
+    { id: 2, text: 'Hacer push del README', completed: true },
+    { id: 3, text: 'Configurar VSCode', completed: true },
+    { id: 4, text: 'Reunión con el equipo', completed: false },
+    { id: 5, text: 'Repasar Git Flow', completed: false }
+  ];
+
+  const taskList = document.getElementById('task-list');
+
+  /**
+   * Función central que aplica todo y renderiza
+   */
+  function update() {
+    renderFilteredTasks(mockTasks, taskList);
+  }
+
+  // Render inicial
+  update();
+
+  // Conectar todos los listeners a la función central
+  initFilters(update);
+  initSearch(update);
+  initTheme();
+</script>
+</body>
+</html>

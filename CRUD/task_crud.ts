@@ -49,6 +49,22 @@ class TaskService {
   task.updatedAt =new Date();
 
   return task;
+  }
+
+
+ delete(id: string): boolean {
+  const initialLength =this.tasks.length;
+
+  this.tasks =this.tasks.filter((t) =>t-id !==id);
+
+  return this.tasks.length < initialLength;
+ }
+ 
+ toggleCOmplete(id: string): Task {
+	const task=this.getById(id);
+	task.completed = !task.completed;
+	task.updatedAt = new Date();
+
+	return task;
+ }
 }
-
-

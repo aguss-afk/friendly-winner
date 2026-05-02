@@ -20,4 +20,19 @@ class TaskService {
   }
  }
 
+ create(title:strign, description?: string): Task{
+	this.validateTitle(title);
+
+	const now = new Date();
+	const task: Task = {
+	  id: this.generateId(),
+	  title: title.trim(),
+	  description,
+	  completed: false,
+	  createdAt: now,
+	  updated At: now,
+	};
+	this.tasks.push(task);
+	return task;
+ }
 

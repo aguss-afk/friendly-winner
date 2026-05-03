@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app">
+    <h1>📝 Mi To-Do List</h1>
+
+    <div class="input-container">
+      <input
+       id="task-input"
+       type="text"
+       placeholder="¿Qué necesitas hacer hoy?"
+      />
+      <button id="add-btn">Agregar</button>
+    </div>
+
+    <div class="filters">
+      <button>Todas</button>
+      <button>Pendientes</button>
+      <button>Completadas</button>
+    </div>   
+
+    <p class="task-counter">Tareas pendientes: 0</p>
+ 
+    <ul id="tasklist" class="task-list">
+      <li class="task">
+        <span class="task-text"> Ejemplo de tarea</span>
+        <button class="complete-btn">✔</button>
+        <button class="delete-btn">🗑</button>
+      </li>
+    </ul>
+   </main>
+
+</body>
+</html>
+
+
+

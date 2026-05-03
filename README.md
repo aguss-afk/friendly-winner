@@ -1,7 +1,6 @@
+# TO DO LIST
 
-#TO DO LIST
-
-##INTEGRANTES
+## INTEGRANTES
  
 Alejandro Jorge Caceres Alvarez
 ucaceresalejandro757@gmail.com
@@ -27,7 +26,7 @@ Manuellink2@gmail.com
 Agustín Leonardo Arnez Alcocer 
 
 
-##BANER
+## BANER
 <p align="center">
   <img src="assets/baner.jpeg" width="600">
 </p>

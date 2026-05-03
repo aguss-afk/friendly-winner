@@ -1,17 +1,17 @@
 Integrantes 
 Alejandro Jorge Caceres Alvarez
 <p align="left">
-  <img src="assets/Ale.png" width="600">
+  <img src="assets/Ale.jpeg" width="600">
 </p>
 
 Kevin Alfredo Burgulla Muriel
 <p align="left">
-  <img src="assets/kevin.png" width="600">
+  <img src="assets/kevin.jpeg" width="600">
 </p>
 
 Manuel Jotan Lazarte Ascuy
 <p align="left">
-  <img src="assets/manuel.png" width="600">
+  <img src="assets/manuel.jpeg" width="600">
 </p>
  
 Agustín Leonardo Arnez Alcocer 

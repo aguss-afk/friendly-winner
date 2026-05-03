@@ -27,11 +27,12 @@ function getEmptyMessage(filter, query) {
  * @param {Array} tasks - Lista completa de tareas
  * @param {HTMLElement} container - Elemento donde renderizar
  */
-export function renderFilteredTasks(tasks, container) {
+export function renderFilteredTasks(tasks, container, callbacks = {}) {
   if (!container) return;
 
   const filter = getCurrentFilter();
   const query = getCurrentQuery();
+  const { onToggleComplete, onDelete } = callbacks;
 
   // Aplicar filtro y búsqueda en orden
   const filtered = filterTasks(tasks, filter);
@@ -52,10 +53,43 @@ export function renderFilteredTasks(tasks, container) {
   searched.forEach(task => {
     const li = document.createElement('li');
     li.className = `task ${task.completed ? 'completed' : ''}`;
-    li.innerHTML = `
-      <span class="task-status">${task.completed ? '✓' : '○'}</span>
-      <span class="task-text">${task.text}</span>
-    `;
+
+    const status = document.createElement('span');
+    status.className = 'task-status';
+    status.textContent = task.completed ? '✓' : '○';
+
+    const text = document.createElement('span');
+    text.className = 'task-text';
+    text.textContent = task.text;
+
+    const actions = document.createElement('div');
+    actions.className = 'task-actions';
+
+    const completeBtn = document.createElement('button');
+    completeBtn.className = 'complete-btn';
+    completeBtn.type = 'button';
+    completeBtn.textContent = task.completed ? 'Deshacer' : 'Completar';
+    completeBtn.addEventListener('click', () => {
+      if (typeof onToggleComplete === 'function') {
+        onToggleComplete(task.id);
+      }
+    });
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'delete-btn';
+    deleteBtn.type = 'button';
+    deleteBtn.textContent = 'Eliminar';
+    deleteBtn.addEventListener('click', () => {
+      if (typeof onDelete === 'function') {
+        onDelete(task.id);
+      }
+    });
+
+    actions.appendChild(completeBtn);
+    actions.appendChild(deleteBtn);
+    li.appendChild(status);
+    li.appendChild(text);
+    li.appendChild(actions);
     container.appendChild(li);
   });
 }
